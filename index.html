@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        header i {
+            font-size: 2.5em;
+            color: #00ccff;
+            text-shadow: 0 0 10px #00ccff;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            color: #00ccff;
+            text-shadow: 0 0 10px #00ccff;
+            animation: fadeIn 1s ease-in;
+        }
+        #metrics {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: #2b2b2b;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 20px;
+            width: 200px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 1s ease-in;
+        }
+        .card h3 {
+            margin: 0 0 10px;
+            color: #ff6384;
+            font-size: 1.2em;
+        }
+        .card p {
+            font-size: 1.5em;
+            margin: 0;
+            color: #ffffff;
+        }
+        .card i {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #00ccff;
+        }
+        canvas {
+            max-width: 400px !important;
+            height: 200px !important;
+            background: #2b2b2b;
+            border-radius: 10px;
+            margin: 20px auto;
+            animation: fadeIn 1.5s ease-in;
+        }
+        #gauge-container, #trend-container {
+            margin: 20px 0;
+        }
+        h3 {
+            color: #ff6384;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        #suggestions-list {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 150px;
+            overflow-y: auto;
+            text-align: left;
+            margin: 0 auto;
+            width: 400px;
+        }
+        .suggestion-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: #444;
+            border-radius: 5px;
+            animation: fadeInSuggestion 1s ease-in;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .suggestion-item:hover {
+            background: #555;
+            cursor: pointer;
+        }
+        .suggestion-item i {
+            margin-right: 10px;
+            color: #00ccff;
+        }
+        .suggestion-item button {
+            background: #ff4444;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .suggestion-item button:hover {
+            background: #cc0000;
+        }
+        #status {
+            font-size: 1em;
+            color: #00ff00;
+            margin: 10px 0;
+        }
+        #status i {
+            margin-right: 5px;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes fadeInSuggestion {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <i class="fas fa-robot"></i>
+        <h1>Enterprise Knowledge Orchestrator</h1>
+    </header>
+    <div id="metrics">
+        <div class="card">
+            <i class="fas fa-clock"></i>
+            <h3>Response Time</h3>
+            <p id="response_time">Loading...</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-check-circle"></i>
+            <h3>Accuracy</h3>
+            <p id="accuracy">Loading...</p>
+        </div>
+    </div>
+    <div id="gauge-container">
+        <h3>Active Users</h3>
+        <canvas id="gauge"></canvas>
+    </div>
+    <div id="trend-container">
+        <h3>Query Trend</h3>
+        <canvas id="trend"></canvas>
+    </div>
+    <h3>Suggestions</h3>
+    <div id="suggestions-list"></div>
+    <div id="status">
+        <i class="fas fa-circle"></i>System Status: Online
+    </div>
+    <footer>Built for AI/GenAI Hackathon 2025</footer>
+
+    <script>
+        function updateDashboard() {
+           const analytics = {
+                metrics: { order_tracking: { avg_response_time: 1.4, avg_confidence: 85 } }
+            };
+            const activeUsers = 1200; 
+            const trendData = [50, 60, 55, 70, 65];
+            const suggestions = [
+                "Add a template for tracking queries",
+                "Improve response time for order status",
+                "Enhance accuracy with user feedback"
+            ];
+
+            console.log("Initializing dashboard with mock data:", analytics, activeUsers, trendData, suggestions);
+
+            const metrics = analytics.metrics.order_tracking;
+            document.getElementById("response_time").innerText = metrics.avg_response_time + "s";
+            document.getElementById("accuracy").innerText = metrics.avg_confidence + "%";
+
+            // Doughnut chart for active users
+            const gaugeCtx = document.getElementById("gauge").getContext("2d");
+            if (gaugeCtx) {
+                new Chart(gaugeCtx, {
+                    type: "doughnut",
+                    data: {
+                        labels: ["Active", "Inactive"],
+                        datasets: [{
+                            data: [activeUsers, 2000 - activeUsers],
+                            backgroundColor: ["#00ccff", "#444"],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        cutout: "70%",
+                        plugins: { legend: { display: false } },
+                        circumference: 180,
+                        rotation: -90
+                    }
+                });
+            } else {
+                console.error("Gauge canvas not found");
+            }
+
+            // Line chart for query trend
+            const trendCtx = document.getElementById("trend").getContext("2d");
+            if (trendCtx) {
+                new Chart(trendCtx, {
+                    type: "line",
+                    data: {
+                        labels: ["10:00", "10:01", "10:02", "10:03", "10:04"],
+                        datasets: [{
+                            label: "Queries",
+                            data: trendData,
+                            borderColor: "#ff6384",
+                            backgroundColor: "rgba(255, 99, 132, 0.2)",
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: "#444" } },
+                            x: { grid: { color: "#444" } }
+                        },
+                        plugins: { legend: { labels: { color: "#fff" } } }
+                    }
+                });
+            } else {
+                console.error("Trend canvas not found");
+            }
+
+            // Enhance Suggestions
+            const suggestionsList = document.getElementById("suggestions-list");
+            suggestionsList.innerHTML = "";
+            suggestions.forEach((suggestion, index) => {
+                const item = document.createElement("div");
+                item.className = "suggestion-item";
+                item.style.animationDelay = `${index * 0.2}s`; 
+                item.innerHTML = `
+                    <span><i class="fas fa-lightbulb"></i>${suggestion}</span>
+                    <button onclick="this.parentElement.style.display='none';">Dismiss</button>
+                `;
+                suggestionsList.appendChild(item);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log("DOM fully loaded, running updateDashboard");
+            updateDashboard();
+            setInterval(() => {
+                const suggestionsList = document.getElementById("suggestions-list");
+                const newSuggestion = `New suggestion ${Math.floor(Math.random() * 100)}`;
+                const item = document.createElement("div");
+                item.className = "suggestion-item";
+                item.style.animationDelay = "0s";
+                item.innerHTML = `
+                    <span><i class="fas fa-lightbulb"></i>${newSuggestion}</span>
+                    <button onclick="this.parentElement.style.display='none';">Dismiss</button>
+                `;
+                suggestionsList.appendChild(item);
+            }, 10000);
+        });
+    </script>
+</body>
+</html>

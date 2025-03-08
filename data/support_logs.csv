@@ -1,0 +1,51 @@
+query_id,query,response_time,confidence,timestamp
+1,Where’s my order #12345?,1.2,98,2025-02-26 10:00
+2,Help with refund,1.5,85,2025-02-26 10:01
+3,Track my package,1.3,75,2025-02-26 10:02
+4,Order update request,2.1,90,2025-02-26 10:03
+5,Missing item in my package,1.8,70,2025-02-26 10:04
+6,Help with return policy,1.6,88,2025-02-26 10:05
+7,Cancel order #12345,1.9,92,2025-02-26 10:06
+8,Track order status,1.5,80,2025-02-26 10:07
+9,Request a refund for item #6789,1.7,65,2025-02-26 10:08
+10,Where can I find my invoice?,1.4,95,2025-02-26 10:09
+11,Problem with payment,2.0,78,2025-02-26 10:10
+12,Tracking info for order #1001,1.3,90,2025-02-26 10:11
+13,Help with delivery issues,1.5,85,2025-02-26 10:12
+14,I want to speak to a manager,1.6,82,2025-02-26 10:13
+15,Order not received,1.9,60,2025-02-26 10:14
+16,Return request,1.4,95,2025-02-26 10:15
+17,Missing tracking number,1.2,76,2025-02-26 10:16
+18,Refund status,1.8,89,2025-02-26 10:17
+19,Delayed package,2.1,70,2025-02-26 10:18
+20,Change shipping address,1.3,80,2025-02-26 10:19
+21,Help with login issue,1.4,88,2025-02-26 10:20
+22,Order confirmation missing,1.5,90,2025-02-26 10:21
+23,Contact customer service,1.8,85,2025-02-26 10:22
+24,Order tracking issue,1.3,75,2025-02-26 10:23
+25,Can’t find my order,1.7,79,2025-02-26 10:24
+26,Refund for damaged item,2.2,88,2025-02-26 10:25
+27,Order status update,1.6,84,2025-02-26 10:26
+28,Refund for missing item,1.9,71,2025-02-26 10:27
+29,How to exchange an item,1.5,90,2025-02-26 10:28
+30,Lost package,2.0,60,2025-02-26 10:29
+31,Order tracking confirmation,1.4,92,2025-02-26 10:30
+32,Tracking not updating,1.3,78,2025-02-26 10:31
+33,Where’s my refund?,1.7,89,2025-02-26 10:32
+34,Order canceled,1.6,80,2025-02-26 10:33
+35,Return policy question,1.4,91,2025-02-26 10:34
+36,How to return an item,1.9,72,2025-02-26 10:35
+37,Request for shipping info,1.2,85,2025-02-26 10:36
+38,Package status,1.8,93,2025-02-26 10:37
+39,Unable to track order,1.5,75,2025-02-26 10:38
+40,Received wrong item,1.3,65,2025-02-26 10:39
+41,Package delay,2.1,80,2025-02-26 10:40
+42,Track package #54321,1.7,82,2025-02-26 10:41
+43,Cancel subscription,1.4,90,2025-02-26 10:42
+44,Exchange request,1.6,87,2025-02-26 10:43
+45,Refund not received,1.9,75,2025-02-26 10:44
+46,Where’s my order #23456?,1.8,92,2025-02-26 10:45
+47,Delayed order update,2.0,79,2025-02-26 10:46
+48,Package not delivered,1.7,85,2025-02-26 10:47
+49,Shipping status,1.2,76,2025-02-26 10:48
+50,Help with item return,1.6,80,2025-02-26 10:49
